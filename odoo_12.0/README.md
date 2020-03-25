@@ -23,7 +23,7 @@ postgres_odoo:                      <- container name
 Now configure the same user and password in the `odoo` container:
 ```
 odoo:                              <- container name
-image: odoo:12.0
+    image: odoo:12.0
     depends_on:
       - postgres_odoo              <- waits until postgres container starts
     restart: always
@@ -74,4 +74,4 @@ docker-compose down -v
 
 ## pgAdmin server configuration:
 
-
+![Configuration example](image.png)
