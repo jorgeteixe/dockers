@@ -1,0 +1,40 @@
+version: '2'
+services:
+  odoo:
+    image: odoo:12.0
+    depends_on:
+      - postgres_odoo
+    restart: always
+    volumes:
+      - ./addons:/mnt/extra-addons
+    ports:
+      - "8069:8069"
+    networks:
+      - odoo
+    environment:
+      - HOST=postgres_odoo
+      - USER=username
+      - PASSWORD=password
+  postgres_odoo:
+    image: postgres:10
+    restart: always
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=username
+    networks:
+      - odoo
+  pgadmin_odoo:
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=user@example.org
+      - PGADMIN_DEFAULT_PASSWORD=password
+    restart: always
+    ports:
+      - "8080:80"
+    networks:
+      - odoo
+
+networks:
+  odoo:
+    driver: bridge
